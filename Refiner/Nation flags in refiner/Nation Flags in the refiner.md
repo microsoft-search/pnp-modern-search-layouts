@@ -3,13 +3,13 @@
 
 One of the properties in the search result is the Managed Metadata field Nationality which is used as a refiner:
 
-![TermSet Nationality](blob/main/assets/termsetnationality.png)
+![TermSet Nationality](blob/main/Refiner/Nation%20flags%20in%20refiner/assets/TermSetNationality.png)
 
 
 
 However the customer prefers to see the flag of the country AND the name of the country in the refiner
 
-![FlagsInRefiner](blob/main/assets\flagsinrefiner.png)
+![FlagsInRefiner](blob/main/Refiner/Nation%20flags%20in%20refiner/assets/FlagsInRefiner.png)
 
 
 
