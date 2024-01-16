@@ -1,4 +1,4 @@
-# pnp-modern-search-layouts
+# PnP Modern Search Layouts
 Community contributed layouts to be used in the PnP Modern Search solution
 
 ## How to use these layouts
