@@ -1,0 +1,178 @@
+
+This template renders a list of people with two columns. I am using mgt-person to render the persona card and have added a custom template for the persona card to show the skills and prior projects.
+
+
+
+![Alt text](assets/twocolumn.png)
+
+![Alt text](assets/custommgtcard.png)
+
+
+
+<content id="data-content">
+
+    <style>
+        mgt-person {
+            --initials-background-color: {{@root.theme.palette.themePrimary}};
+            max-width: 400px;
+        }
+        .template--defaultList {
+    flex-wrap: wrap;
+    display: flex;
+    justify-content: center;
+    gap: 10px 15px;
+    
+}    
+.template--header
+{
+    height: 0%;
+}
+        
+    </style>
+
+    <div class="template">
+
+        {{#if @root.properties.showSelectedFilters}}
+            <pnp-selectedfilters 
+                data-filters="{{JSONstringify filters.selectedFilters 2}}" 
+                data-filters-configuration="{{JSONstringify filters.filtersConfiguration 2}}" 
+                data-instance-id="{{filters.instanceId}}" 
+                data-operator="{{filters.filterOperator}}"
+                data-theme-variant="{{JSONstringify @root.theme}}"
+            >
+            </pnp-selectedfilters>
+        {{/if}}
+       
+        <div class="template--header">
+            {{#if @root.properties.showResultsCount}}
+                <div class="template--resultCount">
+                    <label class="ms-fontWeight-semibold">{{getCountMessage @root.data.totalItemsCount @root.inputQueryText}}</label>
+                </div>
+            {{/if}}
+
+            <div class="template--sort">
+                <pnp-sortfield 
+                    data-fields="{{JSONstringify @root.properties.dataSourceProperties.sortList}}" 
+                    data-default-selected-field="{{sort.selectedSortFieldName}}" 
+                    data-default-direction="{{sort.selectedSortDirection}}"
+                    data-theme-variant="{{JSONstringify @root.theme}}">
+                </pnp-sortfield>    
+            </div>
+        </div>
+        
+        <div>
+            <ul class="template--defaultList">
+                {{#each data.items as |item|}}
+                    <pnp-select 
+                        data-enabled="{{@root.properties.itemSelectionProps.allowItemSelection}}" 
+                        data-index="{{@index}}" 
+                        data-is-selected="{{isItemSelected @root.selectedKeys @index}}">
+
+                        <template id="content">
+                            <li class="template--peopleListItem" tabindex="0">
+                                {{#> resultTypes item=item}}
+
+                                    {{#and @root.properties.layoutProperties.showPersonaCard (slot item @root.slots.PersonQuery)}}
+                                        <mgt-person user-id="{{getUserEmail (slot item @root.slots.PersonQuery)}}" person-card="hover">
+                                            <template>
+                                                <pnp-persona 
+                                                    data-image-url="\{{personImage}}" 
+                                                    data-fields-configuration="{{JSONstringify @root.properties.layoutProperties.peopleFields}}" 
+                                                    data-item="{{JSONstringify item}}" 
+                                                    data-persona-size="{{@root.properties.layoutProperties.personaSize}}"
+                                                    data-theme-variant="{{JSONstringify @root.theme}}"
+                                                    data-instance-id="{{@root.instanceId}}"
+                                                    data-context="{{JSONstringify @root}}">
+                                                </pnp-persona>
+                                                
+                                            </template>
+                                            <template data-type="person-card">
+                                                <mgt-person-card inherit-details>
+                                                    <template data-type="additional-details">
+                                                    <h3>Skills:</h3>
+                                                    <div class="token-list">
+                                                        {{#each (split  skills ";") as |tag| }}
+                                                            <div class="token-list__item.skill" >
+                                                                {{tag}}
+                                                            </div>
+                                                        {{/each}}
+
+                                                </div>
+                                                    <h3>Prior Projects:</h3>
+                                                    <div class="token-list">
+                                                        {{#each (split  PastProjects ";") as |tag| }}
+                                                            <div class="token-list__item.skill" >
+                                                                {{tag}}
+                                                            </div>
+                                                        {{/each}}
+                                                </div>
+
+                                                </template>
+                                                </mgt-person-card>
+                                            </template>
+                                        </mgt-person>
+                                    {{else}}
+                                        <pnp-persona 
+                                            data-fields-configuration="{{JSONstringify @root.properties.layoutProperties.peopleFields}}"
+                                            data-item="{{JSONstringify item}}" 
+                                            data-persona-size="{{@root.properties.layoutProperties.personaSize}}" 
+                                            data-context="{{JSONstringify @root}}"
+                                            data-instance-id="{{@root.instanceId}}"
+                                            data-theme-variant="{{JSONstringify @root.theme}}"
+                                        ></pnp-persona>
+                                    {{/and}}
+                                    
+                                {{/resultTypes}}
+                            </li>
+                        </template>
+                            
+                    </pnp-select>
+                {{/each}}
+            </ul>
+        </div>
+
+        {{#if @root.properties.paging.showPaging}}
+
+            {{#gt @root.data.totalItemsCount @root.properties.paging.itemsCountPerPage}}
+                <pnp-pagination 
+                    data-total-items="{{@root.data.totalItemsCount}}" 
+                    data-hide-first-last-pages="{{@root.properties.paging.hideFirstLastPages}}"
+                    data-hide-disabled="{{@root.properties.paging.hideDisabled}}"
+                    data-hide-navigation="{{@root.properties.paging.hideNavigation}}"
+                    data-range="{{@root.properties.paging.pagingRange}}" 
+                    data-items-count-per-page="{{@root.properties.paging.itemsCountPerPage}}" 
+                    data-current-page-number="{{@root.paging.currentPageNumber}}"
+                    data-theme-variant="{{JSONstringify @root.theme}}"
+                >
+                </pnp-pagination>
+            {{/gt}}
+            
+        {{/if}}
+
+    </div>
+
+</content>
+
+<content id="placeholder-content">
+    <div class="placeholder">
+
+        {{#if @root.properties.showResultsCount}}
+            <div class="template--resultCount">
+                <span class="placeholder--shimmer placeholder--line" style="width: 20%"></span>
+            </div>
+        {{/if}}
+
+        <div>
+            <ul class="template--defaultList">
+                {{#times @root.properties.paging.itemsCountPerPage}}   
+                    <pnp-personashimmers 
+                        data-persona-size="{{@root.properties.layoutProperties.personaSize}}"
+                        data-theme-variant="{{JSONstringify @root.theme}}"
+                    >
+                    </pnp-personashimmers>
+                {{/times}}
+            </ul>
+        </div>
+    </div>
+</content>
+

@@ -19,6 +19,8 @@ Community contributed layouts to be used in the PnP Modern Search solution
 ## Refiner Layouts 
 [Refiner Layouts](Refiner/Refiner%20layouts.md)
 
+![Alt text](Refiner/Nation%20flags%20in%20refiner/assets/FlagsInRefiner.png)
+
 
 ## Search Results Layouts
 [Search Results Layouts](Search%20Results/Search%20Results%20Layouts.md)
