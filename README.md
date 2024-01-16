@@ -15,12 +15,21 @@ Community contributed layouts to be used in the PnP Modern Search solution
 2. Add your layout in a new folder
 3. Add a README.md file in your folder to describe your layout
 4. Add a screenshot of your layout in your folder
+5. Make a pull request
 
 ## Refiner Layouts 
+[used with the Search Refiner web part](https://microsoft-search.github.io/pnp-modern-search/usage/search-filters/)
+
+
 [Refiner Layouts](Refiner/Refiner%20layouts.md)
+
+
 
 ![Alt text](Refiner/Nation%20flags%20in%20refiner/assets/FlagsInRefiner.png)
 
 
 ## Search Results Layouts
+
+[used with the Search Results web part](https://microsoft-search.github.io/pnp-modern-search/usage/search-results/)
+
 [Search Results Layouts](Search%20Results/Search%20Results%20Layouts.md)
