@@ -5,7 +5,7 @@ This template renders search results in *nearly* the same style as they are pres
 
 
 ## Additional Properties (in `selected properties`)
-The following additional properties are neede: 
+The following additional properties are needed: 
 * `ParentLink`
 * `FileName`
 

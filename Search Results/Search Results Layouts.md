@@ -1,5 +1,5 @@
 
-Search result layouts comes in two flavors: 
+Search result layouts comes in different flavors: 
 
 ## Handlebars
 [Handlebar layouts](/Results/Handlebars/Handlebars%20Result%20layouts.md)
