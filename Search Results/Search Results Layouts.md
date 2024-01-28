@@ -8,4 +8,4 @@ Search result layouts comes in two flavors:
 [Adaptive Cards](/Results/Adaptive%20Cards/Adaptive%20Cards%20layouts.md)
 
 ## Documents Search Results in Microsoft Search Style
- [Microsoft Search Style Documents](/Results/Adaptive%20Cards/Adaptive%20Cards%20layouts.md)
+ [Microsoft Search Style Documents](/Results/Microsoft%20Search%20Style%20Documents/Microsoft%20Search%20Documents%20layouts.md)
