@@ -1,0 +1,220 @@
+# Microsoft Search style Search Results for Documents
+This template renders search results in *nearly* the same style as they are presented in Microsoft search results (Title, Editor, Date, Parent Folder, Summary and File Preview). It bases on the inital settings of the `List` layout.
+
+![Microsoft Search Results styled documents](assets/microsoftSearchStyledDocuments.png)
+
+
+## Additional Properties (in `selected properties`)
+The following additional properties are neede: 
+* `ParentLink`
+* `FileName`
+
+
+## Results template (rendering template)
+In order to make the file type displayable, make sure you have set the property `showFileIcon` to true (you can find it in `layoutProperties`). The easiest way to achieve is is to setup List as layout option, activate `Show file icon` to `true` and change the results template afterwords with the content from above.
+
+The custom template is built on HTML and CSS, no additional plugins or libraries are needed.
+
+```html
+<content id="data-content">
+
+    <style>
+        /* Insert your CSS overrides here */
+        .example-themePrimary {
+            display: flex;
+            justify-content: space-between;
+        }
+        .example-themePrimary .parentLink {
+            text-decoration: none;
+        }
+        .example-themePrimary a {
+            color: {
+                {
+                    @root.theme.palette.themePrimary
+                }
+            }
+            ;
+        }
+        
+        {
+            {
+                #unless @root.properties.layoutProperties.showItemThumbnail
+            }
+        }
+        
+        .template--listItem--result {
+            flex-basis: 100%!important;
+        }
+        
+        {
+            {
+                /unless
+            }
+        }
+    </style>
+
+    <div class="template">
+
+        {{#if @root.properties.showSelectedFilters}}
+        <pnp-selectedfilters data-filters="{{JSONstringify filters.selectedFilters 2}}" data-filters-configuration="{{JSONstringify filters.filtersConfiguration 2}}" data-instance-id="{{filters.instanceId}}" data-operator="{{filters.filterOperator}}" data-theme-variant="{{JSONstringify @root.theme}}">
+        </pnp-selectedfilters>
+        {{/if}}
+        <div class="template--header">
+            {{#if @root.properties.showResultsCount}}
+                <div class="template--resultCount">
+                    <label class="ms-fontWeight-semibold">{{getCountMessage @root.data.totalItemsCount @root.inputQueryText}}</label>
+                </div>
+            {{/if}}
+
+            <div class="template--sort">
+                <pnp-sortfield 
+                    data-fields="{{JSONstringify @root.properties.dataSourceProperties.sortList}}" 
+                    data-default-selected-field="{{sort.selectedSortFieldName}}" 
+                    data-default-direction="{{sort.selectedSortDirection}}"
+                    data-theme-variant="{{JSONstringify @root.theme}}">
+                </pnp-sortfield>    
+            </div>
+        </div>
+        {{#if @root.data.promotedResults}}
+        <ul class="template--defaultList template--promotedResults">
+            {{#each @root.data.promotedResults as |promotedResult|}}
+            <li>
+                <div>
+                    <pnp-icon data-name="MiniLink" aria-hidden="true"></pnp-icon>
+                </div>
+                <div>
+                    <a href="{{url}}" style="color:{{@root.theme.semanticColors.link}}">{{title}}</a>
+                    <div>{{description}}</div>
+                </div>
+            </li>
+            {{/each}}
+        </ul>
+        {{/if}}
+        <ul class="template--defaultList">
+            {{#each data.items as |item|}}
+                <pnp-select 
+                    data-enabled="{{@root.properties.itemSelectionProps.allowItemSelection}}" 
+                    data-index="{{@index}}" 
+                    data-is-selected="{{isItemSelected @root.selectedKeys @index}}">
+
+                    <template id="content">
+
+                        <li class="template--listItem">
+                            {{#> resultTypes item=item}}
+                            <div class="template--listItem--result">
+                                {{#if @root.properties.layoutProperties.showFileIcon}}
+                                {{#contains "['STS_Site','STS_Web']" (slot item @root.slots.contentclass)}}
+                                    <pnp-iconfile class="template--listItem--icon" data-extension="{{slot item @root.slots.FileType}}" data-is-container="{{slot item @root.slots.IsFolder}}" data-image-url="{{item.SiteLogo}}" data-size="32" data-theme-variant="{{JSONstringify @root.theme}}"></pnp-iconfile>    
+                                {{else}}
+                                    <pnp-iconfile class="template--listItem--icon" data-extension="{{slot item @root.slots.FileType}}" data-is-container="{{slot item @root.slots.IsFolder}}" data-size="32" data-theme-variant="{{JSONstringify @root.theme}}"></pnp-iconfile>
+                                {{/contains}}
+                                {{/if}}
+                                <div class="template--listItem--contentContainer">
+                                    <div>
+                                        <div class="template--listItem--title example-themePrimary">
+                                            <a href="{{slot item @root.slots.PreviewUrl}}" target="_blank" style="color:{{@root.theme.semanticColors.link}}" data-interception="off" rel="noopener noreferrer">{{slot item @root.slots.Title}}</a>
+                                            <a class="parentLink" href="{{item.ParentLink}}" target="_blank" style="color:{{@root.theme.semanticColors.link}}" data-interception="off" rel="noopener noreferrer"><pnp-icon data-name="Folder" aria-hidden="true"></pnp-icon></a>
+                                        </div>
+                                        <div>                            
+                                            <span class="template--listItem--author">
+                                                {{#with (split (slot item @root.slots.Author) '|')}}
+                                                    {{[1]}}
+                                                {{/with}}
+                                            </span>
+                                            <span class="template--listItem--date">{{getDate (slot item @root.slots.Date) "LL"}}</span>                            
+                                        </div>  
+                                    </div>
+                                    <div>{{getSummary (slot item @root.slots.Summary)}}</div>
+                                    <div class="template--listItem--tags example-themePrimary">
+                                        {{#if (slot item @root.slots.Tags)}}
+                                            <pnp-icon data-name="Tag" aria-hidden="true" data-theme-variant="{{JSONstringify @root.theme}}"></pnp-icon>
+                                            <div>
+                                                {{#each (split (slot item @root.slots.Tags) ",") as |tag| }}
+                                                    <span>{{trim tag}}</span>
+                                                {{/each}}
+                                            </div>
+                                        {{/if}}
+                                    </div>
+                                </div>
+                            </div>
+                            {{#if @root.properties.layoutProperties.showItemThumbnail}}
+                            <div class="template--listItem--thumbnailContainer" data-selection-disabled="true">
+                                <div class="thumbnail--image">
+                                    <pnp-filepreview data-preview-url="{{slot item @root.slots.PreviewUrl}}" data-preview-image-url="{{slot item @root.slots.PreviewImageUrl}}" data-theme-variant="{{JSONstringify @root.theme}}">
+                                        <pnp-img alt='preview-image' width="120" src="{{slot item @root.slots.PreviewImageUrl}}" loading="lazy" data-error-image="{{@root.utils.defaultImage}}" />
+                                    </pnp-filepreview>
+                                    <div class="thumbnail--hover">
+                                        <div>
+                                            <pnp-icon data-name="DocumentSearch" aria-hidden="true"></pnp-icon>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            {{/if}} {{/resultTypes}}
+                        </li>
+                    </template>
+
+                </pnp-select>
+            {{/each}}
+        </ul>
+
+        {{#if @root.properties.paging.showPaging}} {{#gt @root.data.totalItemsCount @root.properties.paging.itemsCountPerPage}}
+        <pnp-pagination data-total-items="{{@root.data.totalItemsCount}}" data-hide-first-last-pages="{{@root.properties.paging.hideFirstLastPages}}" data-hide-disabled="{{@root.properties.paging.hideDisabled}}" data-hide-navigation="{{@root.properties.paging.hideNavigation}}"
+            data-range="{{@root.properties.paging.pagingRange}}" data-items-count-per-page="{{@root.properties.paging.itemsCountPerPage}}" data-current-page-number="{{@root.paging.currentPageNumber}}"
+            data-theme-variant="{{JSONstringify @root.theme}}">
+        </pnp-pagination>
+        {{/gt}} {{/if}}
+
+    </div>
+</content>
+
+<content id="placeholder-content">
+    <style>
+        /* Insert your CSS overrides here */
+    </style>
+
+    <div class="placeholder">
+        {{#if @root.properties.showResultsCount}}
+        <div class="template--resultCount">
+            <span class="placeholder--shimmer placeholder--line" style="width: 20%"></span>
+        </div>
+        {{/if}}
+        <ul class="template--defaultList">
+            {{#times @root.properties.paging.itemsCountPerPage}}
+            <li class="template--listItem" tabindex="0">
+                <div class="template--listItem--result">
+                    {{#if @root.properties.layoutProperties.showFileIcon}}
+                    <div class="template--listItem--icon placeholder--shimmer "></div>
+                    {{/if}}
+                    <div class="template--listItem--contentContainer">
+                        <span class="placeholder--shimmer placeholder--line" style="width: 60%"></span>
+                        <span class="placeholder--shimmer placeholder--line" style="width: 100%"></span>
+                        <span class="placeholder--shimmer placeholder--line" style="width: 100%"></span>
+                        <span class="placeholder--shimmer placeholder--line" style="width: 35%"></span>
+                        <span class="placeholder--shimmer placeholder--line" style="width: 20%"></span>
+                    </div>
+                </div>
+                {{#if @root.properties.layoutProperties.showItemThumbnail}}
+                <div class="template--listItem--thumbnailContainer">
+                    <div class="thumbnail--image">
+                        <div class="placeholder--shimmer" style="width: 120px;height: 70px;"></div>
+                    </div>
+                </div>
+                {{/if}}
+            </li>
+            {{/times}}
+        </ul>
+    </div>
+
+</content>
+```
+
+
+## Query template suggestion
+List all Documents on the current site (make sure to select also the properties `ParentLink` and `Filename`).
+
+```{searchTerms} Path:{Site} IsDocument:true contentclass:"STS_ListItem_DocumentLibrary"```
+
+👉 If you want to exclude Fluent and Loop Components from Search Results, just add the following clause to the query template: `FileType:(-Loop AND -Fluid)`:
+
+```{searchTerms} Path:{Site} IsDocument:true contentclass:"STS_ListItem_DocumentLibrary" FileType:(-Loop AND -Fluid)```
