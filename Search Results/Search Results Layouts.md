@@ -9,3 +9,6 @@ Search result layouts comes in different flavors:
 
 ## Documents Search Results in Microsoft Search Style
  [Microsoft Search Style Documents](/Results/Microsoft%20Search%20Style%20Documents/Microsoft%20Search%20Documents%20layouts.md)
+
+## Documents Search Results from Document library in configurable list style
+ [Top n Documents From Library List](/Results/Top%20N%20Documents%20From%20Library%20List/Flexbox%20list%20layout.md)
