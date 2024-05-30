@@ -1,23 +1,35 @@
 # Search Results for SharePoint Events
-This template uses the reusable [pnp-documentcard](https://microsoft-search.github.io/pnp-modern-search/extensibility/web_components_list/#pnp-documentcard) web component to render items from a standard SharePoint Events list.
+This template uses the reusable [pnp-documentcard](https://microsoft-search.github.io/pnp-modern-search/extensibility/web_components_list/#pnp-documentcard) web component to render items from a standard SharePoint Events list. The document card spaces have be reused to continat the event information including:
+* Category
+* Event date
+* Event location
+* Participants
 
+## Event participants
+By default, any participants included in the event are included in the `ParticipantsPickerOWSUSER` property. However, this perpertiy is not optimised to handle multiple participants. If there is a need to show the number of additional people attending the event - e.g. Jo Bloggs +2 - the following steps are required:
+* Mapp the `ParticipantsPickerOWSUSER` property to a suitable RefineableString option
+* Add the RefinableString used to the `selected properties`
+* Update the `Author` slot to the selected RefinableString
+
+## Event card search results
 ![Event Card Search Results](assets/eventCardResults.png)
 
 ## Additional Properties (in `selected properties`)
 The following additional properies are needed:
-`BannerUrlOWSURLH`
-`EventsRollUpCategory`
-`EventsRollUpEndDate`
-`EventsRollUpStarteDate`
-`ListItemID`
-`Location`
-`ParticipantsPickerOWSUSER`
-`RefinableStringXX` - mapped to the EventsRollUpCategory crawled property
+* `BannerUrlOWSURLH`
+* `EventsRollUpCategory`
+* `EventsRollUpEndDate`
+* `EventsRollUpStarteDate`
+* `ListItemID`
+* `Location`
+* `ParticipantsPickerOWSUSER`
+* `RefinableStringXX` - optional propertiy mapped to the `ParticipantsPickerOWSUSER` property
 
 #### Optional LayoutSlots
 | Slot name | Slot field | Description |
 |:----------|:-----------|:------------|
-| DefaultImage | Image URL | Default image to use when no banner is set |
+| Author | ParticipantsPickerOWSUSER | Sets the Author value to the first participant of the event |
+| Author | RefineableStringXXX | If the 'ParticipantsPickerOWSUSER' crawled property has been mapped to a RefinableString propertiy, this will need to be used a the Slot field |
 
 ## Results tempalte (rendering template)
 The custom tempalte is built on HTML and CSS and uses the [pnp-documentcard](https://microsoft-search.github.io/pnp-modern-search/extensibility/web_components_list/#pnp-documentcard) web component. No additional plugins or libraries are needed.
@@ -32,15 +44,14 @@ The custom tempalte is built on HTML and CSS and uses the [pnp-documentcard](htt
             min-width: 206px; /* Min width of the Office UI Fabric document card */
             flex-basis: 33%; /* fix percentaage */
         }   
-        
+        /* Format the event location so that any overflow is managed appropriatly */
         .template--location {
+            color: {{@root.theme.palette.bodyText}};
             overflow: hidden;
             text-overflow: ellipsis;
             white-space: nowrap;
-            color:{{@root.theme.palette.bodyText}};
             font-style: normal;
             font-weight: normal;
-            
         }
     </style>
 
@@ -81,15 +92,15 @@ The custom tempalte is built on HTML and CSS and uses the [pnp-documentcard](htt
                     <pnp-documentcard class="template--card" 
                         data-ui-test-id="resultCard" 
                         data-item="{{JSONstringify item}}" 
-                        data-location="&lt;a style=&quot;color:{{@root.theme.palette.themePrimary}};font-weight:600;font-family:'{{@root.theme.fonts.small.fontFamily}}'&quot; href=&quot;{{@root.context.site.serverRequestPath}}?f=[{%22filterName%22:%22RefinableString08%22,%22values%22:[{%22name%22:%22{{EventsRollUpCategory}}%22,%22value%22:%22{{slot item @root.slots.Category}}%22,%22operator%22:0}]}]&quot;&gt;{{slot item @root.slots.Category}}&lt;/a&gt;&lt;br&gt;"
+                        data-location="&lt;a style=&quot;color:{{@root.theme.palette.themePrimary}};font-weight:600;font-family:'{{@root.theme.fonts.small.fontFamily}}'&quot; href=&quot;{{@root.context.site.serverRequestPath}}?f=[{%22filterName%22:%22EventsRollUpCategory%22,%22values%22:[{%22name%22:%22{{EventsRollUpCategory}}%22,%22value%22:%22{{EventsRollUpCategory}}%22,%22operator%22:0}]}]&quot;&gt;{{EventsRollUpCategory}}&lt;/a&gt;&lt;br&gt;"
                         data-tags="{{#if (lt (moment (getDate EventsRollUpEndDate) diff=(getDate EventsRollUpStartDate)) '86400000')}}{{getDate EventsRollUpStartDate 'D, MMM yyyy'}}{{else}}{{#if (eq (getDate EventsRollUpStartDate 'MM')(getDate EventsRollUpEndDate 'MM'))}}{{getDate EventsRollUpStartDate 'D'}}-{{else}}{{getDate EventsRollUpStartDate 'D, MMM'}}&nbsp;-&nbsp;{{/if}}{{moment (moment EventsRollUpEndDate utc=null) format='D, MMM yyyy'}}{{/if}}&lt;/br&gt;{{#if Location}}&lt;span class=&quot;template--location&quot;&gt;{{Location}}&lt;/span&gt;{{else}}&nbsp;{{/if}}"
                         data-title="{{slot item @root.slots.Title}}"
-                        data-preview-image="{{#if @root.slots.PreviewImageUrl}}{{slot item @root.slots.PreviewImageUrl}}{{elsse}}/sites/externalevents/SiteAssets/EventBanner.png{{/if}}" 
-                        data-preview-url="{{SPSiteURL}}/_layouts/15/Event.aspx?ListGuid={{slot item @root.slots.ListId}}&ItemId={{slot item @root.slots.ID}}" 
-                        data-date="{{#if (gt (length (split RefinableString120 ';')) 1)}}&nbsp;+{{minus (length (split RefinableString120 ';')) 1}}{{/if}}" 
-                        data-href="{{SPSiteURL}}/_layouts/15/Event.aspx?ListGuid={{slot item @root.slots.ListId}}&ItemId={{slot item @root.slots.ID}}" 
-                        data-author="{{#if RefinableString120}}{{RefinableString120}}{{else}}&nbsp;{{/if}}" 
-                        data-profile-image="{{#if RefinableString120}}/_layouts/15/userphoto.aspx?size=L&username={{getUserEmail RefinableString120}}{{else}}data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII={{/if}}" 
+                        data-preview-image="{{#if BannerUrlOWSURLH}}{{BannerUrlOWSURLH}}{{else}}data:image/svg+xml,%3Csvg%20width%3D%2216000%22%20height%3D%229000%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Cdefs%3E%3ClinearGradient%20id%3D%22grad1%22%20x1%3D%220%25%22%20y1%3D%220%25%22%20x2%3D%22100%25%22%20y2%3D%22100%25%22%3E%3Cstop%20offset%3D%220%25%22%20style%3D%22stop-color%3A{{encodeURI @root.theme.palette.themeTertiary}}%3Bstop-opacity%3A1%22%20%2F%3E%3Cstop%20offset%3D%22100%25%22%20style%3D%22stop-color%3A{{encodeURI @root.theme.palette.themePrimary}}%3Bstop-opacity%3A1%22%20%2F%3E%3C%2FlinearGradient%3E%3C%2Fdefs%3E%3Crect%20width%3D%22100%25%22%20height%3D%22100%25%22%20fill%3D%22url%28%23grad1%29%22%20%2F%3E%3C%2Fsvg%3E{{/if}}" /* URI encoded inline svg image using the primary and tertiary theme colors to create a simple gradient to use when no banner image is used */
+                        data-preview-url="{{#if ListItemID}}{{SPSiteURL}}/_layouts/15/Event.aspx?ListGuid={{slot item @root.slots.ListId}}&ItemId={{ListItemID}}{{/if}}" 
+                        data-date="{{#if (gt (length (split (slot item @root.slots.Author) ';')) 1)}}&nbsp;+{{minus (length (split (slot item @root.slots.Author) ';')) 1}}{{/if}}" 
+                        data-href="{{SPSiteURL}}/_layouts/15/Event.aspx?ListGuid={{slot item @root.slots.ListId}}&ItemId={{ListItemID}}" 
+                        data-author="{{#if (slot item @root.slots.Author)}}{{slot item @root.slots.Author}}{{else}}&nbsp;{{/if}}" 
+                        data-profile-image="{{#if (slot item @root.slots.Author)}}/_layouts/15/userphoto.aspx?size=L&username={{getUserEmail (slot item @root.slots.Author)}}{{else}}data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII={{/if}}"  /* 1 pixel transparent image created at https://png-pixel.com */
                         data-file-extension="docx"
                         data-enable-preview="true" 
                         data-is-container="false"
@@ -188,5 +199,5 @@ List all Events on the current site (make sure to select the properties listed a
 
 ```{searchTerms} Path:{Site} contentclass:"STS_ListItem_Events"```
 
-👉 If you want to filter the Events to a specific category, add refinement filter: `FEventsRollUpCategory: "Category value"`
+👉 If you want to filter the Events to a specific category, add refinement filter: `EventsRollUpCategory: "Category value"`
 
