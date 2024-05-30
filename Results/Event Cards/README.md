@@ -17,7 +17,7 @@ The following additional properies are needed in the search results:
 * `ListItemID`
 * `Location`
 * `ParticipantsPickerOWSUSER`
-* `RefinableStringXXX` - optional propertiy mapped to _ParticipantsPickerOWSUSER_ 
+* `RefinableStringXXX` - optional property mapped to _ParticipantsPickerOWSUSER_ 
 
 #### Optional LayoutSlots
 | Slot name | Slot field | Description |
