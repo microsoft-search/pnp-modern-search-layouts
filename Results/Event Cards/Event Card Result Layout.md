@@ -1,21 +1,15 @@
 # Search Results for SharePoint Events
-This template uses the reusable [pnp-documentcard](https://microsoft-search.github.io/pnp-modern-search/extensibility/web_components_list/#pnp-documentcard) web component to render items from a standard SharePoint Events list. The document card spaces have be reused to continat the event information including:
+This template uses the reusable [pnp-documentcard](https://microsoft-search.github.io/pnp-modern-search/extensibility/web_components_list/#pnp-documentcard) web component to render items from a standard SharePoint Events list. The document card spaces have be reused to contain the event information including:
 * Category
 * Event date
 * Event location
 * Participants
 
-## Event participants
-By default, any participants included in the event are included in the `ParticipantsPickerOWSUSER` property. However, this perpertiy is not optimised to handle multiple participants. If there is a need to show the number of additional people attending the event - e.g. Jo Bloggs +2 - the following steps are required:
-* Mapp the `ParticipantsPickerOWSUSER` property to a suitable RefineableString option
-* Add the RefinableString used to the `selected properties`
-* Update the `Author` slot to the selected RefinableString
-
 ## Event card search results
 ![Event Card Search Results](assets/eventCardResults.png)
 
-## Additional Properties (in `selected properties`)
-The following additional properies are needed:
+## Additional Properties required in `selected properties`
+The following additional properies are needed in the search results:
 * `BannerUrlOWSURLH`
 * `EventsRollUpCategory`
 * `EventsRollUpEndDate`
@@ -23,16 +17,47 @@ The following additional properies are needed:
 * `ListItemID`
 * `Location`
 * `ParticipantsPickerOWSUSER`
-* `RefinableStringXX` - optional propertiy mapped to the `ParticipantsPickerOWSUSER` property
+* `RefinableStringXXX` - optional propertiy mapped to _ParticipantsPickerOWSUSER_ 
 
 #### Optional LayoutSlots
 | Slot name | Slot field | Description |
 |:----------|:-----------|:------------|
-| Author | ParticipantsPickerOWSUSER | Sets the Author value to the first participant of the event |
-| Author | RefineableStringXXX | If the 'ParticipantsPickerOWSUSER' crawled property has been mapped to a RefinableString propertiy, this will need to be used a the Slot field |
+| Author | `ParticipantsPickerOWSUSER` | Sets the Author value to the first participant of the event |
+| Author | `RefineableStringXXX` | If the `ParticipantsPickerOWSUSER`  property has been mapped to a `RefinableStringXXX` propertiy, this will need to be used as the Slot field |
 
-## Results tempalte (rendering template)
-The custom tempalte is built on HTML and CSS and uses the [pnp-documentcard](https://microsoft-search.github.io/pnp-modern-search/extensibility/web_components_list/#pnp-documentcard) web component. No additional plugins or libraries are needed.
+## Event participants
+By default, any participants included in the event are included in the `ParticipantsPickerOWSUSER` property. However, this perpertiy is not optimised to handle multiple participants. If there is a need to show the number of additional people attending the event - e.g. Jo Bloggs +2 - the following steps are required:
+* Map the `ParticipantsPickerOWSUSER` property to a suitable `RefinableStringXXX` Managed Property
+* Add the `RefinableStringXXX` used to the `selected properties`
+* Update the `Author` slot to the selected RefinableString
+
+
+## Additional notes
+* If the event has no banner image, a default embded SVG image using the SharePoint theme accent colors is used. 
+* The category link relies on the `EventsRollUpCategory` property bing using within a refiner webpart
+
+## Document card element - event card mapping
+| pnp-documentcard | Event element | 
+|:-----------------|:-----------|
+| data-location | `EventsRollUpCategory`|
+| data-title | `Title` |
+| data-tags | Date & `Location` |
+| data-preview-image | `BannerUrlOWSURLH` |
+| data-preview-url | `SPSiteURL`/_layouts/15/Event.aspx?ListGuid=`ListId`&ItemId=`ListItemID` |
+| data-href | `SPSiteURL`/_layouts/15/Event.aspx?ListGuid=`ListId`&ItemId=`ListItemID` !
+| data-author | `ParticipantsPickerOWSUSER` |
+| data-profile-image | `ParticipantsPickerOWSUSER` |
+| data-date | number of additional participants |
+
+## Query template suggestion
+List all Events on the current site (make sure to select the properties listed above).
+
+```{searchTerms} Path:{Site} contentclass:"STS_ListItem_Events"```
+
+👉 If you want to filter the Events to a specific category, add refinement filter: `EventsRollUpCategory: "Category value"`
+
+## Results template (rendering template)
+The custom template is built on HTML and CSS and uses the [pnp-documentcard](https://microsoft-search.github.io/pnp-modern-search/extensibility/web_components_list/#pnp-documentcard) web component. No additional plugins or libraries are needed.
 
 ```html
 <content id="data-content">
@@ -194,10 +219,5 @@ The custom tempalte is built on HTML and CSS and uses the [pnp-documentcard](htt
     </div>
 </content>
 ```
-## Query template suggestion
-List all Events on the current site (make sure to select the properties listed above).
 
-```{searchTerms} Path:{Site} contentclass:"STS_ListItem_Events"```
-
-👉 If you want to filter the Events to a specific category, add refinement filter: `EventsRollUpCategory: "Category value"`
 
