@@ -1,0 +1,243 @@
+<content id="data-content">
+
+    <style>
+        /* Assign the correct size % ratio according to the number of wanted cards on a single row. We use flexbox instead of static grid to deal with SharePoint canvas sections*/
+        .template--card {
+            flex-grow: 1;
+            flex-shrink: 1;
+            min-width: 306px; /* Min width of the Office UI Fabric document card */
+            flex-basis: {{@root.properties.layoutProperties.columnSizePercentage}}%;
+        }
+        .pnp-QuickLink-box
+        {
+            display: flex;
+            flex-direction: column;
+            justify-content: first baseline;
+            align-items: center;
+            padding: 10px;
+            margin: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-shadow: 0 0 5px rgba(0,0,0,0.1);
+            transition: box-shadow 0.3s;
+            background-color: rgb(157, 40, 40);
+            width: 300px;
+        }
+        
+        .pnp-QuickLinkBox-title
+        {
+            font-size: 16px;
+            padding-left: 20px;
+            padding-bottom: 10px;
+            text-overflow: ellipsis;
+            overflow: hidden;
+            white-space: nowrap;
+            max-width: 250px;
+            
+        }
+        .pnp-card-image
+        {
+            /* display: block; */
+            opacity: 1;
+            width: 20px;
+            height: 20px;
+            object-fit: cover;
+            float: left;
+            align-self: first baseline;
+            vertical-align: text-top;
+            padding-top: 0px;
+            padding-right: 16px;
+        }
+        
+        .pnp-card-first-line
+        {
+            display: flex;
+            flex-direction: row;
+            align-items: left;
+            justify-content: space-between;
+            align-self: first baseline;
+            padding-left: 15px;
+        }
+        .pnp-QuickLinkBox-Second-line
+        {
+            display: flex;
+            flex-direction: row;
+            align-items: left;
+            justify-content: space-between;
+            color: white;
+            align-self: first baseline;
+        }
+        .pnp-QuickLinkBox-Third-line
+        {
+            display: flex;
+            flex-direction: row;
+            align-items: left;
+            justify-content: space-between;
+            color: white;
+            align-self: first baseline;
+            padding-left: 40px;
+        
+        }
+        .QuickLinkBoxText
+        {
+            padding-left: 20px;
+        }
+        a
+        {
+            color: white;
+        }
+        .ms-Persona-primaryText
+        {
+            color: white;
+        }
+        .ms-Persona-secondaryText
+        {
+            color: white;
+        }
+        .pnp-QuickLinkBoxAdditionalField-text
+        {
+            color: white;
+            padding-left: 40px;
+            max-width: 250px;
+            text-overflow: ellipsis;
+            overflow: hidden;
+        }
+
+    </style>
+
+    <div class="template">
+
+        {{#if @root.properties.showSelectedFilters}}
+            <pnp-selectedfilters 
+                data-filters="{{JSONstringify filters.selectedFilters 2}}" 
+                data-filters-configuration="{{JSONstringify filters.filtersConfiguration 2}}" 
+                data-instance-id="{{filters.instanceId}}" 
+                data-operator="{{filters.filterOperator}}"
+                data-theme-variant="{{JSONstringify @root.theme}}"
+            >
+            </pnp-selectedfilters>
+        {{/if}}
+       
+        <div class="template--header">
+            <div class="template--resultCount">
+              {{#if @root.properties.showResultsCount}}
+                <label class="ms-fontWeight-semibold">{{getCountMessage @root.data.totalItemsCount @root.inputQueryText}}</label>
+              {{/if}}
+            </div>
+
+            <div class="template--toolbar">
+              {{#and properties.layoutProperties.enableDownload @root.properties.itemSelectionProps.allowItemSelection}}
+                <pnp-download-selected-items-button 
+                  data-items="{{JSONstringify data.items}}" 
+                  data-context="{{JSONstringify (truncateContext @root)}}"
+                  data-theme-variant="{{JSONstringify @root.theme}}"
+                >
+                </pnp-download-selected-items-button>
+              {{/and}}
+
+              <div class="template--sort">
+                  <pnp-sortfield 
+                      data-fields="{{JSONstringify @root.properties.dataSourceProperties.sortList}}" 
+                      data-default-selected-field="{{sort.selectedSortFieldName}}" 
+                      data-default-direction="{{sort.selectedSortDirection}}"
+                      data-theme-variant="{{JSONstringify @root.theme}}">
+                  </pnp-sortfield>    
+              </div>
+            </div>
+        </div>
+
+        <div class="template--cardContainer">
+            {{#each data.items as |item|}}    
+                <div class="template--card">
+                    <div class="pnp-QuickLink-box">
+                        <div class="pnp-card-first-line">
+                            <span class="pnp-QuickLinkBox-title"><a href="{{slot item @root.slots.Path}}" target="_blank"> {{slot item @root.slots.Title}} </a></span>                                                
+                        </div>
+                        
+                        <div class="pnp-QuickLinkBox-Second-line">
+                            <img class="pnp-card-image" src="https://res-1.cdn.office.net/files/fabric-cdn-prod_20240610.001/assets/item-types/64/spo.png" role="presentation">
+                            <span class="pnp-QuickLinkBox-text">{{slot item @root.slots.QuickLinkBoxText}}</span>
+                        </div>
+                        <div class="pnp-QuickLinkBox-Third-line">
+                            
+                            <pnp-persona
+                            data-image-url="/_layouts/15/userphoto.aspx?size=L&username={{getUserEmail (slot item @root.slots.QuickLinkLikeUser)}}"
+                            data-primary-text= "{{#with (split (slot item @root.slots.QuickLinkLikeUser) '|')}}{{[1]}}{{/with}}"
+                            data-secondary-text="{{getUserEmail (slot item @root.slots.QuickLinkLikeUser)}}"
+                            data-tertiary-text=""
+                            data-optional-text=""
+                            data-persona-size="" >
+                            </pnp-persona>
+                        </div>
+                        <p class="pnp-QuickLinkBoxAdditionalField-text">{{slot item @root.slots.QuickLinkBoxAdditionalField}}</p>
+                        
+                        
+                    </div>
+                </div>
+            {{/each}}
+
+        </div>
+
+        {{#if @root.properties.paging.showPaging}}
+
+            {{#gt @root.data.totalItemsCount @root.properties.paging.itemsCountPerPage}}
+                <pnp-pagination 
+                    data-total-items="{{@root.data.totalItemsCount}}" 
+                    data-hide-first-last-pages="{{@root.properties.paging.hideFirstLastPages}}"
+                    data-hide-disabled="{{@root.properties.paging.hideDisabled}}"
+                    data-hide-navigation="{{@root.properties.paging.hideNavigation}}"
+                    data-range="{{@root.properties.paging.pagingRange}}" 
+                    data-items-count-per-page="{{@root.properties.paging.itemsCountPerPage}}" 
+                    data-current-page-number="{{@root.paging.currentPageNumber}}"
+                    data-theme-variant="{{JSONstringify @root.theme}}"
+                >
+                </pnp-pagination>
+            {{/gt}}
+            
+        {{/if}}
+
+    </div>
+
+</content>
+
+<content id="placeholder-content">   
+
+        <style>
+            /* Assign the correct size % ratio according to the number of wanted cards on a single row. We use flexbox instead of static grid to deal with SharePoint canvas sections*/
+            .template--card {
+                flex-grow: 1;
+                flex-shrink: 1;
+                min-width: 206px; /* Min width of the Office UI Fabric document card */
+                flex-basis: {{@root.properties.layoutProperties.columnSizePercentage}}%;
+            }    
+        </style>
+
+    <div class="placeholder">
+
+        {{!-- #if showResultsCount --}}
+        <div class="template--resultCount">
+            <span class="placeholder--shimmer placeholder--line" style="width: 20%"></span>
+        </div>
+        {{!-- /if --}}
+        <div class="template--cardContainer">
+
+            {{#times @root.properties.paging.itemsCountPerPage}}
+                <pnp-documentcardshimmers class="template--card" 
+                    data-ui-test-id="fakeCard"
+                    data-theme-variant="{{JSONstringify @root.theme}}"
+                    data-is-compact="{{@root.properties.layoutProperties.isCompact}}">
+                </pnp-documentcardshimmers>
+            {{/times}}
+
+            <!-- Generate fake items to correctly align cards on rows using flexbox -->
+            {{#times @root.properties.layoutProperties.preferedCardNumberPerRow}}
+                <pnp-documentcard class="template--card" 
+                    data-ui-test-id="fakeCard"
+                    data-theme-variant="{{JSONstringify @root.theme}}"
+                    style="visibility:hidden;height: 0;padding: 0">
+                </pnp-documentcard>
+            {{/times}}
+        </div>
+
+    </div>
+</content>
