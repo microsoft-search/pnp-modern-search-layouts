@@ -151,7 +151,7 @@
                 <div class="template--card">
                     <div class="pnp-QuickLink-box">
                         <div class="pnp-card-first-line">
-                            <span class="pnp-QuickLinkBox-title"><a href="{{slot item @root.slots.Path}}" target="_blank"> {{slot item @root.slots.Title}} </a></span>                                                
+                            <span class="pnp-QuickLinkBox-title"><a href="{{#with (split (slot item @root.slots.QuickLinksInPnPModernSearchLink) ',')}}{{[1]}}{{/with}}" target="_blank"> {{slot item @root.slots.Title}} </a></span>                                                
                         </div>
                         
                         <div class="pnp-QuickLinkBox-Second-line">

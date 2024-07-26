@@ -110,8 +110,8 @@
                     <div class="pnp-QuickLink-box">
                         <div class="pnp-card-first-line">
                             <img class="pnp-card-image" src="https://res-1.cdn.office.net/files/fabric-cdn-prod_20240610.001/assets/item-types/64/spo.png" role="presentation">
-                            <span class="pnp-QuickLinkBox-title"><a href="{{slot item @root.slots.Path}}" target="_blank"> {{slot item @root.slots.Title}} </a></span>                                                
-                        </div>                        
+                            <span class="pnp-QuickLinkBox-title"><a href="{{#with (split (slot item @root.slots.QuickLinksInPnPModernSearchLink) ',')}}{{[1]}}{{/with}}" target="_blank"> {{slot item @root.slots.Title}} </a></span>                                                
+                         </div>                        
                     </div>
                 </div>
             {{/each}}
