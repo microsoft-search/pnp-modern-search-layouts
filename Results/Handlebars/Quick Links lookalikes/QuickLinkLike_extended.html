@@ -35,6 +35,20 @@
             max-width: 250px;
             
         }
+        .pnp-QuickLink-Icon
+        {
+             display: block; 
+            opacity: 1;
+            width: 32px;
+            height: 32px;
+            object-fit: cover;
+            float: left;
+            align-self: first baseline;
+            vertical-align: text-top;
+            padding-top: 0px;
+            
+            min-width: 41px;
+        }
         .pnp-card-image
         {
             /* display: block; */
@@ -155,7 +169,10 @@
                         </div>
                         
                         <div class="pnp-QuickLinkBox-Second-line">
-                            <img class="pnp-card-image" src="https://res-1.cdn.office.net/files/fabric-cdn-prod_20240610.001/assets/item-types/64/spo.png" role="presentation">
+                            <span class="pnp-QuickLink-Icon">  
+                                <pnp-icon data-name="{{slot item @root.slots.QuickLinksInPnPModernSearchIconName}}"  aria-hidden="true" data-theme-variant="{{JSONstringify @root.theme}}"></pnp-icon>
+                            </span>
+                            <!-- <img class="pnp-card-image" src="https://res-1.cdn.office.net/files/fabric-cdn-prod_20240610.001/assets/item-types/64/spo.png" role="presentation"> -->
                             <span class="pnp-QuickLinkBox-text">{{slot item @root.slots.QuickLinkBoxText}}</span>
                         </div>
                         

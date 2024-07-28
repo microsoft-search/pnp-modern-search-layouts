@@ -35,20 +35,27 @@
             max-width: 250px;
             
         }
-        .pnp-card-image
+        .pnp-QuickLink-Icon
         {
-            /* display: block; */
+             display: block; 
             opacity: 1;
-            width: 20px;
-            height: 20px;
+            width: 32px;
+            height: 32px;
             object-fit: cover;
             float: left;
             align-self: first baseline;
             vertical-align: text-top;
             padding-top: 0px;
-            padding-right: 16px;
+            
+            min-width: 41px;
         }
-        
+        .ms-Icon
+        {
+            font-size: 32px;
+            color: white;
+            width: 32px;
+            height: 32px;
+        }        
         .pnp-card-first-line
         {
             display: flex;
@@ -107,7 +114,7 @@
     </style>
 
     <div class="template">
-
+        
         {{#if @root.properties.showSelectedFilters}}
             <pnp-selectedfilters 
                 data-filters="{{JSONstringify filters.selectedFilters 2}}" 
@@ -156,7 +163,9 @@
                         </div>
                         
                         <div class="pnp-QuickLinkBox-Second-line">
-                            <img class="pnp-card-image" src="https://res-1.cdn.office.net/files/fabric-cdn-prod_20240610.001/assets/item-types/64/spo.png" role="presentation">
+                            <span class="pnp-QuickLink-Icon">  
+                                <pnp-icon data-name="{{slot item @root.slots.QuickLinksInPnPModernSearchIconName}}"  aria-hidden="true" data-theme-variant="{{JSONstringify @root.theme}}"></pnp-icon>
+                        </span>
                             <span class="pnp-QuickLinkBox-text">{{slot item @root.slots.QuickLinkBoxText}}</span>
                         </div>
                         <div class="pnp-QuickLinkBox-Third-line">
