@@ -20,7 +20,8 @@
             border-radius: 5px;
             box-shadow: 0 0 5px rgba(0,0,0,0.1);
             transition: box-shadow 0.3s;
-            background-color: rgb(157, 40, 40);
+            /* background-color: rgb(157, 40, 40); */
+            background-color: {{@root.theme.palette.themePrimary}};
             width: 300px;
         }
         
@@ -159,13 +160,14 @@
                 <div class="template--card">
                     <div class="pnp-QuickLink-box">
                         <div class="pnp-card-first-line">
-                            <span class="pnp-QuickLinkBox-title"><a href="{{slot item @root.slots.Path}}" target="_blank"> {{slot item @root.slots.Title}} </a></span>                                                
+                            <span class="pnp-QuickLinkBox-title"><a href="{{#with (split (slot item @root.slots.QuickLinksInPnPModernSearchLink) ',')}}{{[0]}}{{/with}}" target="_blank"> {{slot item @root.slots.Title}} </a></span>                                                
+                            
                         </div>
                         
                         <div class="pnp-QuickLinkBox-Second-line">
                             <span class="pnp-QuickLink-Icon">  
                                 <pnp-icon data-name="{{slot item @root.slots.QuickLinksInPnPModernSearchIconName}}"  aria-hidden="true" data-theme-variant="{{JSONstringify @root.theme}}"></pnp-icon>
-                        </span>
+                            </span>
                             <span class="pnp-QuickLinkBox-text">{{slot item @root.slots.QuickLinkBoxText}}</span>
                         </div>
                         <div class="pnp-QuickLinkBox-Third-line">

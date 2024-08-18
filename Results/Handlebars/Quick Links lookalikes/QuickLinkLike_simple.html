@@ -20,14 +20,15 @@
             border-radius: 5px;
             box-shadow: 0 0 5px rgba(0,0,0,0.1);
             transition: box-shadow 0.3s;
-            background-color: rgb(157, 40, 40);
+            /* background-color: rgb(157, 40, 40); */
+            background-color: {{@root.theme.palette.neutralDark}};
             width: 300px;
         }
         
         .pnp-QuickLinkBox-title
         {
             font-size: 16px;
-            padding-left: 20px;
+            /* padding-left: 20px; */
             text-overflow: ellipsis;
             overflow: hidden;
             white-space: nowrap;
@@ -127,7 +128,7 @@
                             <span class="pnp-QuickLink-Icon">  
                                 <pnp-icon data-name="{{slot item @root.slots.QuickLinksInPnPModernSearchIconName}}"  aria-hidden="true" data-theme-variant="{{JSONstringify @root.theme}}"></pnp-icon>
                             </span>
-                            <span class="pnp-QuickLinkBox-title"><a href="{{#with (split (slot item @root.slots.QuickLinksInPnPModernSearchLink) ',')}}{{[1]}}{{/with}}" target="_blank"> {{slot item @root.slots.Title}} </a></span>                                                
+                            <span class="pnp-QuickLinkBox-title"><a href="{{#with (split (slot item @root.slots.QuickLinksInPnPModernSearchLink) ',')}}{{[0]}}{{/with}}" target="_blank"> {{slot item @root.slots.Title}} </a></span>                                                
                          </div>                        
                     </div>
                 </div>
