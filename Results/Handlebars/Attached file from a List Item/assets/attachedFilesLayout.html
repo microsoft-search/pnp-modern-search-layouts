@@ -23,9 +23,10 @@
         }
         .simpletags
         {
-         background-color: #04AA6D; /* Green */
+         background-color: aliceblue;
   border: none;
-  color: white;
+  color: {{@root.theme.palette.themePrimary}};
+  
   padding: 15px ;
   text-align: center;
   text-decoration: none;
@@ -80,15 +81,20 @@
                             {{!-- The block below will be used as default item template if no result types matched --}}
                            
                              {{#each (split (slot item @root.slots.AttachedFiles) ";") as |file| }}
+                             
            <div class="simpletags">
-              <span>
-                         <pnp-iconfile class="icon" data-extension="{{slot item @root.slots.FileType}}" data-theme-variant="{{JSONstringify @root.theme}}"></pnp-iconfile>
-                         <a href="{{trim file}}">{{#with (split file '/')}}{{[9]}}{{/with}}</a>
-                         
-                         
-              </span>   
-                  
-                
+              
+{{#each (split (file) "/") as |segment| }}     
+{{#if @last}} 
+    <span>
+                   <pnp-iconfile class="icon" data-extension="{{slot item @root.slots.FileType}}" data-theme-variant="{{JSONstringify @root.theme}}"></pnp-iconfile>
+                         <a href="{{trim file}} style="color: aliceblue;">{{#with (split file '/')}}{{[9]}}{{/with}}</a>
+          
+      </span>   
+{{/if}}
+              {{/each}}
+    
+  
             </div>
 
                 {{/each}}
