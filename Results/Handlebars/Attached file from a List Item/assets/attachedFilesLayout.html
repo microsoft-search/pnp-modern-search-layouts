@@ -88,7 +88,7 @@
 {{#if @last}} 
     <span>
                    <pnp-iconfile class="icon" data-extension="{{slot item @root.slots.FileType}}" data-theme-variant="{{JSONstringify @root.theme}}"></pnp-iconfile>
-                         <a href="{{trim file}} style="color: aliceblue;">{{#with (split file '/')}}{{[9]}}{{/with}}</a>
+                         <a href="{{trim file}} style="color: aliceblue;">{{segment}}</a>
           
       </span>   
 {{/if}}
