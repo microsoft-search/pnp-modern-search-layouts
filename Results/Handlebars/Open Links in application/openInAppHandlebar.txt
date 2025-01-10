@@ -1,0 +1,51 @@
+{{#eq FileType 'xlsx'}}
+<a href="ms-excel:ofv|u|{{Path}}"  data-interception="off" title="{{Filename}}">{{Title}}</a>
+
+{{else}}
+{{#eq FileType 'docx'}}
+<a href="ms-word:ofv|u|{{Path}}" data-interception="off" title="{{Filename}}" >{{Filename}}</a>
+
+
+{{else}}
+{{#eq FileType 'pptx'}}
+<a href="ms-powerpoint:ofv|u|{{Path}}"  data-interception="off" title="{{Filename}}" >{{Filename}}</a>
+
+{{else}}
+{{#eq FileType 'xls'}}
+<a href="ms-excel:ofv|u|{{Path}}"  data-interception="off" title="{{Filename}}" >{{Filename}}</a>
+
+{{else}}
+{{#eq FileType 'doc'}}
+<a href="ms-word:ofv|u|{{Path}}"  data-interception="off" title="{{Filename}}" >{{Filename}}</a>
+
+
+{{else}}
+{{#eq FileType 'xlsm'}}
+<a href="ms-excel:ofv|u|{{Path}}"  data-interception="off" title="{{Filename}}" >{{Filename}}</a>
+
+{{else}}
+{{#eq FileType 'csv'}}
+<a href="ms-excel:ofv|u|{{Path}}"  data-interception="off" title="{{Filename}}" >{{Filename}}</a>
+
+{{else}}
+{{#eq FileType 'xlsb'}}
+<a href="ms-excel:ofv|u|{{Path}}"  data-interception="off" title="{{Filename}}" >{{Filename}}</a>
+
+{{else}}
+{{#eq FileType 'pdf'}}
+<a href="{{Path}}" data-interception="off" title="{{Filename}}" >{{Filename}}</a>
+
+{{else}}
+{{#eq Filename 'DispForm.aspx'}}
+<a href="https://[YOUR TENANT URL]{{wpSiteOWSTEXT}}" title="{{Title}}" target="_blank" data-interception="off">{{Title}}</a>
+
+
+
+ 
+{{else}}
+
+<a href="{{Path}}" data-interception="off" title="{{Title}}">{{Title}}</a>
+
+
+
+{{/eq}}{{/eq}}{{/eq}}{{/eq}}{{/eq}}{{/eq}}{{/eq}}{{/eq}}{{/eq}}{{/eq}}
