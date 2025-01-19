@@ -1,0 +1,53 @@
+<content id="data-content">
+
+    <style>
+        /* Insert your CSS overrides here */
+        .bioHeading { font-size: 20px; font-weight: 600;  }
+
+        .bio { font-size: 18px; }
+        .profileRight pnp-icon, .profileRight pnp-icon div { display: inline !important; }
+        .profileRight A { color: {{@root.theme.palette.themePrimary}}; }
+       
+        .example-themePrimary a {
+            color: {
+                {
+                    @root.theme.palette.themePrimary
+                }
+            }
+            ;
+        }
+        
+     
+    </style>
+
+    <div class="template">
+
+       
+  
+        <p class="template--defaultList">
+            {{#each data.items as |item|}}
+                
+
+                {{#> resultTypes item=item}}
+                <div class="profileRight">
+                    <div class="bioHeading" role="heading" aria-level="2">Biography</div>
+
+                    <p class="bio">{{slot item @root.slots.Description}}</p>
+                    <p class="cv">
+                         <a href="{{#with (split (slot item @root.slots.URL) ', ')}}
+                                    {{[0]}}
+                                {{/with}}" target="_blank" style="color:{{@root.theme.semanticColors.link}}" data-interception="off" rel="noopener noreferrer">
+                                <pnp-icon data-name="PDF" aria-hidden="true"></pnp-icon> View CV</a>
+                         
+                    
+                    </p>
+                 {{/resultTypes}}
+               
+
+            {{/each}}
+        </p>
+
+    
+
+    </div>
+</content>

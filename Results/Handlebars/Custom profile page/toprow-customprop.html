@@ -1,0 +1,80 @@
+<content id="data-content">
+
+    <style>
+        mgt-person {
+            --initials-background-color: {{@root.theme.palette.themePrimary}};
+        }
+        .profileFirstRow { margin: 0; }
+        .profileFirstRow LI { display: flex; align-items: center; line-height: 1.4em; }
+        
+        .profileTop { flex-grow: 1; }
+        .profileImage { border-radius: 50%; width: 150px; height: 150px; margin-right: 20px;}
+        .profileName strong { font-size: 20px; color: inherit !important; }
+        .profileTop pnp-icon, .profileTop pnp-icon div { display: inline !important; }
+        .profileTop A { color: {{@root.theme.palette.themePrimary}}; }
+        .profileTitle { margin-top: 12px; font-size: 18px; color: {{@root.theme.palette.neutralSecondary}}; }
+        
+    </style>
+
+    <div class="template">
+
+     
+        
+        <div>
+            <ul class="template--defaultList profileFirstRow">
+                {{#each data.items as |item|}}
+                    <pnp-select 
+                        data-enabled="{{@root.properties.itemSelectionProps.allowItemSelection}}" 
+                        data-index="{{@index}}" 
+                        data-is-selected="{{isItemSelected @root.selectedKeys @index}}">
+
+                        <template id="content">
+                            <li class="template--peopleListItem" tabindex="0">
+                                {{#> resultTypes item=item}}
+                                
+                                    <img class="profileImage" src="/_layouts/15/userphoto.aspx?size=L&username={{slot item @root.slots.UserEmail}}" />
+                                    <div class="profileTop">
+                                        <div class="profileName"><strong>{{slot item @root.slots.Title}}</strong> </div>
+                                        <div class="profilePronunciation">{{#if (slot item @root.slots.AudioPronunciation)}}<a href="{{slot item @root.slots.AudioPronunciation}}" target="_blank"><pnp-icon data-name="Volume2" aria-hidden="true"></pnp-icon> Pronunciation</a> {{/if}} </div>
+                                        <div class="profileTitle">{{slot item @root.slots.JobTitle}} </div>
+                                        <div class="profileDept">Department: {{slot item @root.slots.Department}}</div>
+                                    </div>
+
+                                    
+                                {{/resultTypes}}
+                            </li>
+                        </template>
+                            
+                    </pnp-select>
+                {{/each}}
+            </ul>
+        </div>
+
+
+    </div>
+
+</content>
+
+<content id="placeholder-content">
+    <div class="placeholder">
+
+        {{#if @root.properties.showResultsCount}}
+            <div class="template--resultCount">
+                <span class="placeholder--shimmer placeholder--line" style="width: 20%"></span>
+            </div>
+        {{/if}}
+
+        <div>
+            <ul class="template--defaultList">
+                {{#times @root.properties.paging.itemsCountPerPage}}   
+                    <pnp-personashimmers 
+                        data-persona-size="{{@root.properties.layoutProperties.personaSize}}"
+                        data-theme-variant="{{JSONstringify @root.theme}}"
+                    >
+                    </pnp-personashimmers>
+                {{/times}}
+            </ul>
+        </div>
+    </div>
+</content>
+
