@@ -20,11 +20,16 @@ Community contributed layouts to be used in the PnP Modern Search solution
 ## New layouts
 Open Links in Application rather than the browser: [Open links in App](https://github.com/microsoft-search/pnp-modern-search-layouts/tree/main/Results/Handlebars/Open%20Links%20in%20application)
 
+Custom profile page: [Custom profile page](https://github.com/microsoft-search/pnp-modern-search-layouts/blob/main/Results/Handlebars/Custom%20profile%20page/readme.md)
+
 ## Samples of layouts 
 
+<!-- insert image file -->
+Custom profile page
+![Alt text](Results/Handlebars/Custom%20profile%20page/assets/custom-profile-page.png)
 
-
+Nation flags in refiner
 ![Alt text](Refiner/Nation%20flags%20in%20refiner/assets/FlagsInRefiner.png)
 
-
+File Extensions icons
 ![Alt text](Refiner/File%20Extensions%20icons/RefinerWithFileExtensionIcons.png)
