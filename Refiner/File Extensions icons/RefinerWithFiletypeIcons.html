@@ -108,17 +108,50 @@
 											   {{/eq}}
                                                 
                                                
-												<pnp-filtercheckbox 
-													data-instance-id="{{@root.instanceId}}" 
-													data-filter-name="{{filter.filterName}}" 
-													data-name="{{name}}" 
-													data-value="{{value}}" 
-													data-selected="{{selected}}" 
-													data-disabled="{{disabled}}" 
-													data-count="{{count}}"
-													data-is-multi="{{../isMulti}}"
-													data-theme-variant="{{JSONstringify @root.theme}}"
-												>
+											{{#eq name "docx"}}
+                                                                    <pnp-filtercheckbox 
+                                                                    data-instance-id="{{@root.instanceId}}" 
+                                                                    data-filter-name="{{filter.filterName}}" 
+                                                                    data-name="Word"
+                                                                    data-value="{{name}}" 
+                                                                    data-selected="{{selected}}" 
+                                                                    data-disabled="{{disabled}}" 
+                                                                    data-count="{{count}}"
+                                                                    data-is-multi="{{../isMulti}}"
+                                                                    data-theme-variant="{{JSONstringify @root.theme}}"
+                                                                    >
+                                                                    </pnp-filtercheckbox>
+                                                                {{else}}
+                                                                    {{#eq name "aspx"}}
+                                                                        <pnp-filtercheckbox 
+                                                                        data-instance-id="{{@root.instanceId}}" 
+                                                                        data-filter-name="{{filter.filterName}}" 
+                                                                        data-name="Article or news" 
+                                                                        data-value="{{value}}" 
+                                                                        data-selected="{{selected}}" 
+                                                                        data-disabled="{{disabled}}" 
+                                                                        data-count="{{count}}"
+                                                                        data-is-multi="{{../isMulti}}"
+                                                                        data-theme-variant="{{JSONstringify @root.theme}}"
+                                                                    >
+                                                                    </pnp-filtercheckbox>
+                                                                    {{else}}
+
+                                                                    <pnp-filtercheckbox 
+                                                                        data-instance-id="{{@root.instanceId}}" 
+                                                                        data-filter-name="{{filter.filterName}}" 
+                                                                        data-name="{{name}}" 
+                                                                        data-value="{{value}}" 
+                                                                        data-selected="{{selected}}" 
+                                                                        data-disabled="{{disabled}}" 
+                                                                        data-count="{{count}}"
+                                                                        data-is-multi="{{../isMulti}}"
+                                                                        data-theme-variant="{{JSONstringify @root.theme}}"
+                                                                    >
+                                                                    </pnp-filtercheckbox>
+                                                                    {{/eq}}
+                                                                {{/eq}}
+
 												</pnp-filtercheckbox>
 												{{#if ../showCount}}
 													<span data-ui-test-id="filterCount">({{count}})</span>
