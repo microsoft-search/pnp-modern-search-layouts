@@ -83,7 +83,6 @@ The custom template is built on HTML and CSS, no additional plugins or libraries
             {{[1]}}
             {{/with}}</span><br>{{getDate item.LastModifiedTime "MMMM DD YYYY"}}</p>
                     </div>
-                    <like-result-component tenanturl="https://01m0b.sharepoint.com" pageurl="{{item.Path}}" pagesourcesite="{{item.SPSiteURL}}" context="{{PageContext}}"></like-result-component>
                 </div>
             </div>
             {{/each}}
