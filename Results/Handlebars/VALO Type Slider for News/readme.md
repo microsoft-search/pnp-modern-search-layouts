@@ -1,5 +1,3 @@
-VALO STyle News Slider Template
-
 # VALO Style News Slider Template
 
 Ever thought about havong a beautiful slider, but the standard SharePoint one just doesn'T do the trick? (It's rather ugly and simple)
@@ -32,6 +30,6 @@ There is some custom placeholdercontent displaying a message that you can change
 
 ### Be aware
 
-...of using multiple versions of the html template with different heights and settings on the same page. You can do that, but need to rename the template AND the wrapper classes in the code to somethingh different, yo the CSS layer code doesn't interfere with the wrong template. 
+...of using multiple versions of the html template with different heights and settings on the same page. You can do that, but need to rename the template AND the wrapper classes in the code to something different, so the CSS layer code doesn't interfere with the wrong template. 
 
 Have fun!
