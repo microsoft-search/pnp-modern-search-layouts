@@ -33,3 +33,10 @@ Nation flags in refiner
 
 File Extensions icons
 ![Alt text](Refiner/File%20Extensions%20icons/RefinerWithFileExtensionIcons.png)
+
+News Slider by Saskia
+![Alt text](Results/Handlebars/VALO%20Type%20Slider%20for%20News/assets/slider-screenshot.png)
+
+Updated Tags in Lists
+![Alt text](Results/Handlebars/List%20Tag%20options/asserts/advanced_tags.png)
+

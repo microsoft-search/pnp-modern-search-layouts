@@ -2,15 +2,45 @@
 
     <style>
         /* Insert your CSS overrides here */
-        .tagstest {
-            display: inline-block;
-            padding: 2px 5px;
-            margin-right: 5px;
-            background-color: #f4f4f4;
-            color: #333;
-            border-radius: 5px;
-            font-size: 12px;
-        }        
+        .TagLink
+        {
+            color: white;
+
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 400;
+            line-height: 1.5;
+            padding: 0px 0px;
+            padding-left: 2px;
+            padding-right: 5px;
+            padding-top: 2px;
+            text-align: center;
+            text-decoration: none;
+            white-space: nowrap;
+            overflow: hidden;   
+        }
+        .TagPill {
+            
+            background-color: {{@root.theme.palette.themePrimary}};
+            border-radius: 12px;
+            box-sizing: content-box;
+            color: #FFFFFF ;
+            cursor: default;
+            display: flex;
+            flex-shrink: 1;
+            flex-wrap: nowrap;
+            height: 26px;
+            line-height: 26px;
+            margin: 4px 4px 6px;
+            max-width: 100%;
+            padding-left: 5px;
+            position: relative;
+            -webkit-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            text-decoration: none;
+     
+        }
         .example-themePrimary a {
             color: {
                 {
@@ -119,14 +149,20 @@
                                     <div>{{getSummary (slot item @root.slots.Summary)}}</div>
                                     <div class="template--listItem--tags example-themePrimary">
                                         {{#if (slot item @root.slots.Tags)}}
-                                            <pnp-icon data-name="Tag" aria-hidden="true" data-theme-variant="{{JSONstringify @root.theme}}"></pnp-icon>
+                                            <!-- <pnp-icon data-name="Tag" aria-hidden="true" data-theme-variant="{{JSONstringify @root.theme}}"></pnp-icon> -->
                                             <div>
-                                                {{#each (split (slot item @root.slots.Tags) ",") as |tag| }}
+                                                {{#each (split (slot item @root.slots.Tags) ";") as |tag| }}
                                                 <div class="tagstest">
-                                                    <i class="ms-Icon ms-Icon--MapPin" aria-hidden="true"></i>
-                                                    <a href="?q=Tags:'{{trim tag}}'" data-interception="off">{{tag}}</a>
+                                                    {{#with (split (tag) ";") }}
+                                                    
+                                                    
+                                                    <div class="TagPill">
+                                                        <a class="TagLink" href="?q={{@root.slots.Tags}}:'{{lookup (split [0] '|') 2}}'' " data-interception="off">{{lookup (split [0] '|') 2}}</a> 
+                                                    </div>
+                                                    {{/with}}     
+                                                    
+                                                    
                                                 </div>
-                                                
                                                 {{/each}}
 
                                                 
