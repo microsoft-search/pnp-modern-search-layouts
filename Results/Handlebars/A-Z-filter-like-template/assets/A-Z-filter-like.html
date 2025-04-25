@@ -1,0 +1,96 @@
+<content id="data-content">
+
+    <style>
+
+       /* Insert your CSS overrides here */
+       .example-themePrimary a {
+            color: {{@root.theme.palette.themePrimary}};
+        }
+
+        .icon {
+            width: 20px;
+            height: 16px;
+        }
+
+        ul.template--custom {
+            list-style: none;
+            padding-left: 5px;
+            display:flex;
+        }
+
+        ul.template--custom li {
+            display: flex;
+            padding: 8px;
+        }
+
+
+    </style>
+
+    <div class="template">
+
+        
+        <div class="template--header">
+            
+            
+        </div>
+
+        <ul class="template--custom">
+            {{#each data.items as |item|}}
+
+                <pnp-select
+                    data-enabled="{{@root.properties.itemSelectionProps.allowItemSelection}}"
+                    data-index="{{@index}}"
+                    data-is-selected="{{isItemSelected @root.selectedKeys @index}}">
+
+                    <template id="content">
+                    {{#> resultTypes item=item}}
+                            {{!-- The block below will be used as default item template if no result types matched --}}
+                            <li>
+                                    <span class="example-themePrimary">{{#with (split (slot item @root.slots.FirstLetterFromTitle) '#')}}{{[1]}}{{/with}}</span>
+                            </li>
+                        {{/resultTypes}}
+                    </template>
+
+                </pnp-select>
+
+            {{/each}}
+        </ul>
+    </div>
+
+   
+
+</content>
+
+<content id="placeholder-content">
+
+    <style>
+
+        .placeholder .icon {
+            width: 20px;
+            height: 16px;
+            margin-right: 5px;
+        }
+
+        .placeholder ul {
+            list-style: none;
+        }
+
+        .placeholder ul li {
+            display: flex;
+            align-items: center;
+            padding: 8px;
+        }
+
+    </style>
+
+    <div class="placeholder">
+        <ul>
+            {{#times @root.properties.paging.itemsCountPerPage}}
+                <li>
+                    <div class="icon placeholder--shimmer"></div>
+                    <span class="placeholder--shimmer placeholder--line" style="width: 60%"></span>
+                </li>
+            {{/times}}
+        </ul>
+    </div>
+</content>
