@@ -147,21 +147,14 @@
                                         <span class="template--listItem--date">{{getDate (slot item @root.slots.Date) "LL"}}</span>                            
                                     </span>                        
                                     <div>{{getSummary (slot item @root.slots.Summary)}}</div>
-                                    <div class="template--listItem--tags example-themePrimary">
+                                    <div class="template--listItem--tags example-themePrimary" >
                                         {{#if (slot item @root.slots.Tags)}}
                                             <!-- <pnp-icon data-name="Tag" aria-hidden="true" data-theme-variant="{{JSONstringify @root.theme}}"></pnp-icon> -->
-                                            <div>
-                                                {{#each (split (slot item @root.slots.Tags) ";") as |tag| }}
-                                                <div class="tagstest">
-                                                    {{#with (split (tag) ";") }}
-                                                    
-                                                    
+                                            <div style="justify-content: flex-start;">
+                                                {{#each (split (slot item @root.slots.Tags) "ǂǂ") as |tag| }}
                                                     <div class="TagPill">
-                                                        <a class="TagLink" href="?q={{@root.slots.Tags}}:'{{lookup (split [0] '|') 2}}'' " data-interception="off">{{lookup (split [0] '|') 2}}</a> 
-                                                    </div>
-                                                    {{/with}}     
-                                                    
-                                                    
+                                                 <a class="TagLink" href="?q={{tag}}:'{{tag}}'' " data-interception="off">{{tag}}</a> 
+
                                                 </div>
                                                 {{/each}}
 

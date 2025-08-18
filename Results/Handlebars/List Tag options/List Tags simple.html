@@ -4,12 +4,13 @@
         /* Insert your CSS overrides here */
         .Simpletags {
             display: inline-block;
-            padding: 2px 5px;
-            margin-right: 5px;
-            background-color: #f4f4f4;
+            padding: 2px 5px 5px;
+            margin: 5px;
+            background-color: lightblue;
             color: #333;
             border-radius: 5px;
             font-size: 12px;
+            
         }        
         .example-themePrimary a {
             color: {
@@ -120,15 +121,12 @@
                                     <div class="template--listItem--tags example-themePrimary">
                                         {{#if (slot item @root.slots.Tags)}}
                                             <pnp-icon data-name="Tag" aria-hidden="true" data-theme-variant="{{JSONstringify @root.theme}}"></pnp-icon>
-                                            <div>
-                                                {{#each (split (slot item @root.slots.Tags) ",") as |tag| }}
-                                                <div class="Simpletags">
-                                                    {{trim tag}}
-                                                </div>
-                                                
+                                            <div style="justify-content: flex-start;">
+                                                {{#each (split (slot item @root.slots.Tags) "ǂǂ") as |tag| }}
+                                                    <div class="Simpletags">
+                                                        {{trim tag}}
+                                                    </div>                                                
                                                 {{/each}}
-
-                                                
                                             </div>
                                         {{/if}}
                                     </div>
