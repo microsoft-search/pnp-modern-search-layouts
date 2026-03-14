@@ -25,6 +25,8 @@ Custom profile page: [Custom profile page](https://github.com/microsoft-search/p
 ## Samples of layouts 
 
 <!-- insert image file -->
+Updated Quick Links look-a-like ![Quick Links](/Results/Handlebars/Quick%20Links%20lookalikes/assets/QuickLinksInPnPModernSearch_simple_layout2.png)
+
 Custom profile page
 ![Alt text](Results/Handlebars/Custom%20profile%20page/assets/custom-profile-page.png)
 
