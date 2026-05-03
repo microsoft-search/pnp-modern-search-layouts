@@ -4,6 +4,9 @@ This sample is a new variant of the list tag layouts. It keeps the tag-pill pres
 
 It does not replace the existing **List Tags Advanced options** sample. That sample should remain as-is. This variant is an additional option for scenarios where the tags should act as refiner links.
 
+<img width="608" height="380" alt="Skærmbillede 2026-05-03 152312" src="https://github.com/user-attachments/assets/876a4993-f7e1-492e-ba78-128c4b47d49c" />
+
+
 ## What this variant does
 
 - renders tags as pills
