@@ -28,6 +28,9 @@ Also the slider height ist changeable in the code, default is 500px.
 
 There is some custom placeholdercontent displaying a message that you can change, also remember to also change the height of the placeholder for a smooth rendering experience.
 
+## PnP Modern Search compatibility
+As the slider changed with newer releases there are 2 versions of this template, with the normal version compatible up until PnP Modern Search 4.16 and the 2nd version (with the 4-23-2 in the filename) compatible with version 4.23.2 and ongoing thanks to the devs making some changes to the code to continue supporting this type of design.
+
 ### Be aware
 
 ...of using multiple versions of the html template with different heights and settings on the same page. You can do that, but need to rename the template AND the wrapper classes in the code to something different, so the CSS layer code doesn't interfere with the wrong template. 
