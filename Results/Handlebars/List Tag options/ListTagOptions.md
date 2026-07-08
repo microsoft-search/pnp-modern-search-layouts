@@ -15,17 +15,15 @@ The List Tags Simple option looks like this by adding a div and a class handle t
 
 
 ## Advanced layout ##
-The List Tags Advanced option looks like this by adding a div and a class handle the CSS:
+The List Tags Advanced option looks like this, using the same style as seen in the refiner.
 
-The List Tags Advanced option looks like this using the same css class as the simple option and making it a link:
-
-```html
-<div class="tagstest">
-    <i class="ms-Icon ms-Icon--MapPin" aria-hidden="true"></i>
-    <a href="?q=Tags:'{{trim tag}}'" data-interception="off">{{tag}}</a>
-</div>
-
-```
 
 ![Advanced](/Results/Handlebars/List%20Tag%20options/asserts/advanced_tags.png)
+
+## Refinable links layout ##
+The List Tags Refinable Links option is a new variant that keeps the pill style, but makes each tag open a target search page with a Search Filters refiner already selected.
+
+This variant is page-specific in practice. You must replace the page URL and the Search Filters web part instance ID with values from your own page.
+
+[List Tags Refinable Links](/Results/Handlebars/List%20Tags%20Refinable%20Links/ListTagsRefinableLinks.md)
 

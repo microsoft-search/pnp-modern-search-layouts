@@ -25,6 +25,8 @@ Custom profile page: [Custom profile page](https://github.com/microsoft-search/p
 ## Samples of layouts 
 
 <!-- insert image file -->
+Updated Quick Links look-a-like ![Quick Links](/Results/Handlebars/Quick%20Links%20lookalikes/assets/QuickLinksInPnPModernSearch_simple_layout2.png)
+
 Custom profile page
 ![Alt text](Results/Handlebars/Custom%20profile%20page/assets/custom-profile-page.png)
 
@@ -33,3 +35,10 @@ Nation flags in refiner
 
 File Extensions icons
 ![Alt text](Refiner/File%20Extensions%20icons/RefinerWithFileExtensionIcons.png)
+
+News Slider by Saskia
+![Alt text](Results/Handlebars/VALO%20Type%20Slider%20for%20News/assets/slider-screenshot.png)
+
+Updated Tags in Lists
+![Alt text](Results/Handlebars/List%20Tag%20options/asserts/advanced_tags.png)
+

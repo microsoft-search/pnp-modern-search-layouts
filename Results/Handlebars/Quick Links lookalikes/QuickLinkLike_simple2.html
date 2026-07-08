@@ -1,0 +1,173 @@
+<content id="data-content">
+
+<style>
+
+    ul.template--custom {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0;
+        align-items: stretch;
+    }
+
+    ul.template--custom li {
+        display: flex;
+        width: 350px;
+        box-sizing: border-box;
+        padding: 0;
+    }
+
+    .ql-card-link {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        padding: 10px 12px;
+        width: 100%;
+        min-height: 72px;
+        text-decoration: none;
+        border-radius: 4px;
+        transition: background-color 0.1s ease;
+        box-sizing: border-box;
+    }
+
+    .ql-card-link:hover {
+        background-color: #E3E3E3;
+        text-decoration: none;
+    }
+
+    .ql-icon-wrapper {
+        flex-shrink: 0;
+        width: 25px;
+        height: 25px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-right: 10px;
+    }
+
+    .ql-text-wrapper {
+        display: flex;
+        flex-direction: column;
+        flex: 1;
+        min-width: 0;
+    }
+
+    .ql-title {
+        font-family: "Segoe UI", sans-serif;
+        font-size: 14px;
+        font-weight: 600;
+        color: #201F1E;
+        display: block;
+        word-break: break-word;
+        line-height: 25px;
+    }
+
+    .ql-description {
+        font-family: "Segoe UI", sans-serif;
+        font-size: 14px;
+        font-weight: 400;
+        color: #605E5C;
+        margin-top: 2px;
+        word-break: break-word;
+        min-height: 16px;
+        line-height: 18px;
+    }
+
+</style>
+
+<div class="template">
+    <ul class="template--custom">
+        {{#each data.items as |item|}}
+            <pnp-select
+                data-enabled="{{@root.properties.itemSelectionProps.allowItemSelection}}"
+                data-index="{{@index}}"
+                data-is-selected="{{isItemSelected @root.selectedKeys @index}}">
+                <template id="content">
+                    {{#> resultTypes item=item}}
+                        <li>
+                            <a href="{{slot item @root.slots.URLAnchor}}" class="ql-card-link" data-interception="off">
+                                <div class="ql-icon-wrapper">
+                                    <pnp-icon data-name="{{slot item @root.slots.FabricIconName}}" aria-hidden="true" style="font-size: 24px; color: {{slot item @root.slots.FabricIconColor}};"></pnp-icon>
+                                </div>
+                                <div class="ql-text-wrapper">
+                                    <div class="ql-title">{{slot item @root.slots.Title}}</div>
+                                    <div class="ql-description">{{slot item @root.slots.Description}}</div>
+                                </div>
+                            </a>
+                        </li>
+                    {{/resultTypes}}
+                </template>
+            </pnp-select>
+        {{/each}}
+    </ul>
+</div>
+
+</content>
+
+<content id="placeholder-content">
+
+    <style>
+
+        .placeholder ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .placeholder ul li {
+            display: flex;
+            flex-direction: row;
+            align-items: flex-start;
+            padding: 12px 16px;
+            background-color: #ffffff;
+            border: none;
+            border-radius: 4px;
+            box-shadow: none;
+            width: 280px;
+            min-height: 60px;
+            box-sizing: border-box;
+        }
+
+        .placeholder .icon {
+            width: 24px;
+            height: 24px;
+            flex-shrink: 0;
+            margin-right: 12px;
+            margin-top: 2px;
+        }
+
+        .placeholder .text-block {
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+            gap: 6px;
+            justify-content: center;
+        }
+
+        .placeholder--line {
+            height: 12px;
+            border-radius: 2px;
+        }
+
+    </style>
+
+    <div class="placeholder">
+        <ul>
+            {{#times 4}}
+                <li>
+                    <div class="icon placeholder--shimmer"></div>
+                    <div class="text-block">
+                        <span class="placeholder--shimmer placeholder--line" style="width: 70%"></span>
+                        <span class="placeholder--shimmer placeholder--line" style="width: 90%"></span>
+                    </div>
+                </li>
+            {{/times}}
+        </ul>
+    </div>
+
+</content>
